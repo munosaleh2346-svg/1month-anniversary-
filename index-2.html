@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hambalyo Hal Bil oo Jacayl ah - Salma Feysal Ahmed Hassan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-light: #fff0f5;
+            --pink-soft: #ffe4e9;
+            --pink-medium: #ff85a2;
+            --pink-deep: #e03e6b;
+            --white: #ffffff;
+            --text-dark: #3d222c;
+            --text-muted: #785260;
+            --shadow-soft: 0 12px 35px rgba(224, 62, 107, 0.14);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #fff5f8 0%, #ffe6ee 50%, #ffffff 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart-particle {
+            position: absolute;
+            bottom: -40px;
+            font-size: 20px;
+            opacity: 0.6;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        #envelope-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #ffdee9 0%, #ffffff 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 24px;
+            text-align: center;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        #envelope-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.05);
+        }
+
+        .envelope-card {
+            background: var(--white);
+            border: 2px solid #ffc2d4;
+            border-radius: 28px;
+            padding: 40px 28px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+        }
+
+        .envelope-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            display: inline-block;
+            animation: pulseHeart 1.8s infinite ease-in-out;
+        }
+
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
+        .envelope-card h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.3rem;
+            color: var(--pink-deep);
+            margin-bottom: 12px;
+        }
+
+        .envelope-card p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--pink-medium), var(--pink-deep));
+            color: var(--white);
+            border: none;
+            padding: 15px 32px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(224, 62, 107, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(224, 62, 107, 0.4);
+        }
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border: 2px solid #ffd6e2;
+            border-radius: 30px;
+            padding: 42px 28px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--pink-soft);
+            color: var(--pink-deep);
+            font-weight: 700;
+            font-size: 0.82rem;
+            padding: 8px 18px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: var(--pink-deep);
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+
+        .recipient-name {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+        }
+
+        .hero-subtitle {
+            color: var(--text-muted);
+            font-size: 1.02rem;
+            line-height: 1.65;
+            max-width: 560px;
+            margin: 0 auto 24px;
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .stat-box {
+            background: var(--pink-light);
+            border: 1px solid #ffd1df;
+            border-radius: 18px;
+            padding: 16px 10px;
+        }
+
+        .stat-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--pink-deep);
+        }
+
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .letter-card {
+            background: var(--white);
+            border: 2px solid #ffd6e2;
+            border-radius: 28px;
+            padding: 36px 28px;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .letter-card h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: var(--pink-deep);
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .letter-body p {
+            font-size: 1.02rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+        }
+
+        .signature {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px dashed #ffc2d4;
+            text-align: right;
+        }
+
+        .signature span {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        .signature strong {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.85rem;
+            color: var(--pink-deep);
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .section-heading h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: var(--pink-deep);
+        }
+
+        .section-heading p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+
+        .flip-card {
+            background: var(--white);
+            border: 2px solid #ffd6e2;
+            border-radius: 22px;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 8px 22px rgba(224, 62, 107, 0.08);
+            cursor: pointer;
+            transition: transform 0.25s ease, background 0.25s ease;
+            min-height: 175px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flip-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .flip-card.revealed {
+            background: linear-gradient(135deg, #fff0f5, #ffe3ec);
+            border-color: var(--pink-medium);
+        }
+
+        .card-emoji {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-weight: 700;
+            color: var(--pink-deep);
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .celebrate-box {
+            background: linear-gradient(135deg, #ff85a2, #e03e6b);
+            color: var(--white);
+            border-radius: 28px;
+            padding: 36px 24px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .celebrate-box h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .celebrate-box p {
+            font-size: 0.98rem;
+            opacity: 0.95;
+            margin-bottom: 22px;
+            line-height: 1.6;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--pink-deep);
+            border: none;
+            padding: 14px 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s ease;
+        }
+
+        .btn-white:hover {
+            transform: scale(1.05);
+        }
+
+        .burst-heart {
+            position: fixed;
+            pointer-events: none;
+            font-size: 24px;
+            z-index: 999;
+            animation: burstAnim 1.2s ease-out forwards;
+        }
+
+        @keyframes burstAnim {
+            0% {
+                transform: translate(0, 0) scale(0.6);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--dx), var(--dy)) scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .hero-title { font-size: 2.4rem; }
+            .recipient-name { font-size: 1.25rem; }
+            .stats-bar { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="floating-hearts" id="floating-hearts"></div>
+
+    <div id="envelope-screen">
+        <div class="envelope-card">
+            <div class="envelope-icon">💌</div>
+            <h1>Fariin Gaar ah oo ku Socota Salma</h1>
+            <p>Waxaa jira hadiyad yar oo jacayl ah oo ka timid qalbiga <strong>Saleh Sadiq Mohamud</strong>, kuna socota <strong>Salma Feysal Ahmed Hassan</strong>.</p>
+            <button class="btn-primary" onclick="openSurprise()">Halkan Taabo Si Aad U Furto 💖</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="hero-card">
+            <span class="badge">✨ Xuska Hal Bil oo Jacayl ah ✨</span>
+            <h1 class="hero-title">Hambalyo Hal Bil oo Qurux Badan</h1>
+            <div class="recipient-name">Salma Feysal Ahmed Hassan ❤️</div>
+            <p class="hero-subtitle">
+                Maanta waxaa noo buuxsantay hal bil oo farxad, kalgacal, iyo xasuuso aan la ilaawi karin. Adigu waxaad tahay sababta ugu weyn ee qalbigaygu u farxo maalin kasta.
+            </p>
+
+            <div class="stats-bar">
+                <div class="stat-box">
+                    <div class="stat-number">1 Bil</div>
+                    <div class="stat-label">Jacayl & Farxad</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">30 Maalmood</div>
+                    <div class="stat-label">Oo Aad Qalbigayga Ku Jirto</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Inta Aan Ku Jeclahay</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="letter-card">
+            <h2>Warqad Jacayl oo Qalbigayga Ka Timid 🌹</h2>
+            <div class="letter-body">
+                <p>Gacalisadayda qaali ah, <strong>Salma Feysal Ahmed Hassan</strong>,</p>
+                <p>
+                    Tan iyo maalintii aan nolosha wadaagnay, wax walba waxay noqdeen kuwo qurux badan oo iftiin leh. Hal bil gudaheed, waxaad qalbigayga ku beertay jacayl aan xad lahayn, naxariis, iyo farxad aanan weligay hore u dareemin.
+                </p>
+                <p>
+                    Waxaan rabaa inaad ogaato inaan <strong>si dhab ah oo qoto dheer kuu jeclahay</strong>. Codkaaga, dhoolla-caddayntaada, iyo daryeelkaaga waxay ii yihiin waxa ugu qaalisan nolosha. Maalin kasta oo aan kula hadlo ama aan kaa fikiro waxay ii tahay nimco aan Alle ugu mahadceliyo.
+                </p>
+                <p>
+                    Tani waa bishii ugu horreysay oo keliya, waxaana rajaynayaa inaan wada qaadanno bilo iyo sanooyin badan oo farxad, guul, iyo jacayl waara ah. Aad iyo aad ayaan kuu jeclahay, Salma!
+                </p>
+            </div>
+            <div class="signature">
+                <span>Jacayl aan dhammaanayn oo ka yimid,</span>
+                <strong>Saleh Sadiq Mohamud 💖</strong>
+            </div>
+        </div>
+
+        <div class="section-heading">
+            <h2>6 Sababood oo Aan Kuu Jeclahay 🌸</h2>
+            <p>Taabo kaar kasta si aad u akhrido fariinta ku jirta</p>
+        </div>
+
+        <div class="cards-grid">
+            <div class="flip-card" onclick="revealCard(this, '✨', 'Dhoolla-caddayntaada', 'Dhoolla-caddayntaada quruxda badan waxay iftiimisaa maalintayda xitaa marka aan daallanahay.')">
+                <div class="card-emoji">💝</div>
+                <div class="card-title">Fariinta 1aad</div>
+                <div class="card-text">Taabo si aad u furto</div>
+            </div>
+
+            <div class="flip-card" onclick="revealCard(this, '👑', 'Qalbigaaga Nadiifka ah', 'Waxaad leedahay qalbi naxariis badan, daacad ah, oo aan cidna la barbar dhigi karin.')">
+                <div class="card-emoji">🌸</div>
+                <div class="card-title">Fariinta 2aad</div>
+                <div class="card-text">Taabo si aad u furto</div>
+            </div>
+
+            <div class="flip-card" onclick="revealCard(this, '🕊️', 'Degganaantaada', 'Marka aan kula jiro ama aan kula hadlo, waxaan dareemaa nabad iyo xasilooni buuxda.')">
+                <div class="card-emoji">💌</div>
+                <div class="card-title">Fariinta 3aad</div>
+                <div class="card-text">Taabo si aad u furto</div>
+            </div>
+
+            <div class="flip-card" onclick="revealCard(this, '🌟', 'Quruxdaada Gaarka ah', 'Gudaha iyo dibaddaba waxaad ka tahay qof cajiib ah oo qalbigayga degtay.')">
+                <div class="card-emoji">🎀</div>
+                <div class="card-title">Fariinta 4aad</div>
+                <div class="card-text">Taabo si aad u furto</div>
+            </div>
+
+            <div class="flip-card" onclick="revealCard(this, '🤝', 'Daryeelkaaga', 'Sida aad iiga fikirto ee aad ii garab taagan tahay waa wax aanan weligay ilaawi doonin.')">
+                <div class="card-emoji">🌷</div>
+                <div class="card-title">Fariinta 5aad</div>
+                <div class="card-text">Taabo si aad u furto</div>
+            </div>
+
+            <div class="flip-card" onclick="revealCard(this, '💍', 'Mustaqbalkeena', 'Waxaan ku riyoodaa inaan kula wadaago farxad kasta oo nolosha soo marta. Waan ku jeclahay!')">
+                <div class="card-emoji">💖</div>
+                <div class="card-title">Fariinta 6aad</div>
+                <div class="card-text">Taabo si aad u furto</div>
+            </div>
+        </div>
+
+        <div class="celebrate-box">
+            <h3>Aad Ayaan Kuu Jeclahay Salma! 🥰</h3>
+            <p>Alle ha noo barakeeyo jacaylkeena, hana naga dhigo kuwo mar walba isku faraxsan.</p>
+            <button class="btn-white" onclick="burstHearts(event)">Dir Jacayl & Quluub 💕</button>
+        </div>
+    </div>
+
+    <script>
+        const heartsContainer = document.getElementById('floating-hearts');
+        const heartSymbols = ['💖', '💕', '💗', '🌸', '🤍', '💓'];
+
+        for (let i = 0; i < 22; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart-particle';
+            heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (6 + Math.random() * 7) + 's';
+            heart.style.animationDelay = (Math.random() * 5) + 's';
+            heart.style.fontSize = (16 + Math.random() * 16) + 'px';
+            heartsContainer.appendChild(heart);
+        }
+
+        function openSurprise() {
+            document.getElementById('envelope-screen').classList.add('hidden');
+            triggerCenterBurst();
+        }
+
+        function revealCard(card, emoji, title, text) {
+            if (!card.classList.contains('revealed')) {
+                card.classList.add('revealed');
+                card.innerHTML = `
+                    <div class="card-emoji">${emoji}</div>
+                    <div class="card-title">${title}</div>
+                    <div class="card-text">${text}</div>
+                `;
+            }
+            const rect = card.getBoundingClientRect();
+            spawnBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 10);
+        }
+
+        function burstHearts(event) {
+            spawnBurst(event.clientX, event.clientY, 24);
+        }
+
+        function triggerCenterBurst() {
+            spawnBurst(window.innerWidth / 2, window.innerHeight / 2, 28);
+        }
+
+        function spawnBurst(x, y, count) {
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.className = 'burst-heart';
+                el.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                el.style.left = x + 'px';
+                el.style.top = y + 'px';
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 60 + Math.random() * 160;
+                const dx = Math.cos(angle) * distance + 'px';
+                const dy = Math.sin(angle) * distance - 40 + 'px';
+
+                el.style.setProperty('--dx', dx);
+                el.style.setProperty('--dy', dy);
+
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1200);
+            }
+        }
+    </script>
+</body>
+</html>
